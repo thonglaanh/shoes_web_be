@@ -8,9 +8,11 @@
 /Users/decade/shoes_web 2/be/src/main/java/com/shoes/entity/Size.java
 /Users/decade/shoes_web 2/be/src/main/java/com/shoes/controller/SanPhamController.java
 /Users/decade/shoes_web 2/be/src/main/java/com/shoes/controller/ThuongHieuController.java
+/Users/decade/shoes_web 2/be/src/main/java/com/shoes/controller/DanhGiaController.java
 /Users/decade/shoes_web 2/be/src/main/java/com/shoes/controller/GiamGiaController.java
 /Users/decade/shoes_web 2/be/src/main/java/com/shoes/service/GiamGiaService.java
 /Users/decade/shoes_web 2/be/src/main/java/com/shoes/entity/MauSac.java
+/Users/decade/shoes_web 2/be/src/main/java/com/shoes/dto/DanhGiaRequest.java
 /Users/decade/shoes_web 2/be/src/main/java/com/shoes/controller/HoaDonChiTietController.java
 /Users/decade/shoes_web 2/be/src/main/java/com/shoes/repository/DonHangRepository.java
 /Users/decade/shoes_web 2/be/src/main/java/com/shoes/repository/TaiKhoanRepository.java
@@ -20,9 +22,12 @@
 /Users/decade/shoes_web 2/be/src/main/java/com/example/GenerateTextFromTextInput.java
 /Users/decade/shoes_web 2/be/src/main/java/com/shoes/dto/LoginRequest.java
 /Users/decade/shoes_web 2/be/src/main/java/com/shoes/controller/HoaDonController.java
+/Users/decade/shoes_web 2/be/src/main/java/com/shoes/repository/DanhGiaRepository.java
+/Users/decade/shoes_web 2/be/src/main/java/com/shoes/dto/RatingStatsResponse.java
 /Users/decade/shoes_web 2/be/src/main/java/com/shoes/entity/SanPhamChiTiet.java
 /Users/decade/shoes_web 2/be/src/main/java/com/shoes/service/DonHangService.java
 /Users/decade/shoes_web 2/be/src/main/java/com/shoes/controller/MauSacController.java
+/Users/decade/shoes_web 2/be/src/main/java/com/shoes/service/DanhGiaService.java
 /Users/decade/shoes_web 2/be/src/main/java/com/shoes/security/JwtUtil.java
 /Users/decade/shoes_web 2/be/src/main/java/com/shoes/controller/ChatLieuController.java
 /Users/decade/shoes_web 2/be/src/main/java/com/shoes/repository/ChatLieuRepository.java
@@ -46,6 +51,7 @@
 /Users/decade/shoes_web 2/be/src/main/java/com/shoes/repository/MauSacRepository.java
 /Users/decade/shoes_web 2/be/src/main/java/com/shoes/dto/ChatRequest.java
 /Users/decade/shoes_web 2/be/src/main/java/com/shoes/entity/GiamGia.java
+/Users/decade/shoes_web 2/be/src/main/java/com/shoes/entity/DanhGia.java
 /Users/decade/shoes_web 2/be/src/main/java/com/shoes/repository/SanPhamRepository.java
 /Users/decade/shoes_web 2/be/src/main/java/com/shoes/service/HoaDonService.java
 /Users/decade/shoes_web 2/be/src/main/java/com/shoes/dto/TaiKhoanResponse.java
@@ -64,3 +70,4 @@
 /Users/decade/shoes_web 2/be/src/main/java/com/shoes/repository/SanPhamChiTietRepository.java
 /Users/decade/shoes_web 2/be/src/main/java/com/shoes/controller/AuthController.java
 /Users/decade/shoes_web 2/be/src/main/java/com/shoes/security/JwtFilter.java
+/Users/decade/shoes_web 2/be/src/main/java/com/shoes/dto/DanhGiaResponse.java
