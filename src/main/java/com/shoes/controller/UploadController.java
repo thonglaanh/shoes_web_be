@@ -42,7 +42,7 @@ public class UploadController {
             Path target = this.uploadDir.resolve(fileName);
             Files.copy(file.getInputStream(), target, StandardCopyOption.REPLACE_EXISTING);
 
-            String url = "http://localhost:8080/uploads/" + fileName;
+            String url = "https://shoes-web-be.onrender.com/uploads/" + fileName;
             return ResponseEntity.ok(Map.of("url", url, "fileName", fileName));
         } catch (IOException e) {
             return ResponseEntity.internalServerError().body(Map.of("error", "Upload failed: " + e.getMessage()));
