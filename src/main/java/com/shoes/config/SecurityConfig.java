@@ -34,7 +34,7 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "http://localhost:5174",
                 "https://shoes-web.onrender.com", "https://shoes-web-1.onrender.com",
-                "https://shoes-web-client-one.vercel.app"));
+                "https://shoes-web-client-one.vercel.app", "https://shoes-web-admin.vercel.app"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(false);
