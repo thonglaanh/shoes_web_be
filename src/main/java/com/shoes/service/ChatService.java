@@ -18,10 +18,13 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -110,35 +113,61 @@ public class ChatService {
     }
 
     public ChatStatsResponse getStats() {
-        Long totalChats = chatLogRepository.countTotalChats();
-        Long chatsToday = chatLogRepository.countChatsToday();
-        Long successfulChats = chatLogRepository.countSuccessfulChats();
-        Long failedChats = totalChats - successfulChats;
-        Long uniqueUsers = chatLogRepository.countUniqueUsers();
 
-        // Get top users
+        Long totalChats = Optional.ofNullable(chatLogRepository.countTotalChats())
+                .orElse(0L);
+
+        LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
+
+        Long chatsToday = chatLogRepository.countByCreatedAtAfter(startOfDay);
+
+        Long successfulChats = Optional.ofNullable(chatLogRepository.countSuccessfulChats())
+                .orElse(0L);
+
+        Long uniqueUsers = Optional.ofNullable(chatLogRepository.countUniqueUsers())
+                .orElse(0L);
+
+        Long failedChats = totalChats - successfulChats;
+
         List<ChatStatsResponse.UserChatCount> topUsers = new ArrayList<>();
+
         try {
             List<Object[]> rawTopUsers = chatLogRepository.findTopUsersByChats();
-            for (Object[] row : rawTopUsers) {
-                String email = (String) row[0];
-                Long count = ((Number) row[1]).longValue();
-                topUsers.add(new ChatStatsResponse.UserChatCount(email, count));
-            }
-        } catch (Exception e) {
-            // Silent fail - optional data
+
+            rawTopUsers.stream()
+                    .limit(10)
+                    .forEach(row -> {
+                        String email = String.valueOf(row[0]);
+                        Long count = ((Number) row[1]).longValue();
+
+                        topUsers.add(
+                                new ChatStatsResponse.UserChatCount(
+                                        email,
+                                        count));
+                    });
+        } catch (Exception ignored) {
         }
 
-        // Get sample questions
         List<String> sampleQuestions = new ArrayList<>();
+
         try {
-            sampleQuestions = chatLogRepository.findSampleQuestions();
-        } catch (Exception e) {
-            // Silent fail - optional data
+            sampleQuestions = chatLogRepository.findAll()
+                    .stream()
+                    .map(ChatLog::getUserMessage)
+                    .filter(msg -> msg != null && !msg.isBlank())
+                    .limit(5)
+                    .toList();
+        } catch (Exception ignored) {
         }
 
-        return new ChatStatsResponse(totalChats, chatsToday, successfulChats, failedChats,
-                uniqueUsers, topUsers, sampleQuestions);
+        return new ChatStatsResponse(
+                totalChats,
+                chatsToday,
+                successfulChats,
+                failedChats,
+                uniqueUsers,
+                topUsers,
+                sampleQuestions);
     }
 
     private List<SanPham> getRelevantProducts(String userMessage) {
