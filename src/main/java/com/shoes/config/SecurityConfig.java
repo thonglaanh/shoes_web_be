@@ -66,7 +66,8 @@ public class SecurityConfig {
                         .requestMatchers("POST", "/api/chat").permitAll()
                         .requestMatchers("/api/chat/stats").permitAll()
                         .requestMatchers("/api/reviews").permitAll()
-                        .requestMatchers("/api/reviews/product/**").permitAll()
+                        .requestMatchers("/api/reviews/stats/product/**").permitAll()
+                        .requestMatchers("/api/orders").permitAll()
 
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
