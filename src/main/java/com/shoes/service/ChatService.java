@@ -107,6 +107,10 @@ public class ChatService {
             chatLogRepository.save(log);
         } catch (Exception e) {
             // Silent fail for logging to not affect user response
+            e.printStackTrace();
+
+            return new ChatResponse(
+                    "Lỗi lưu lịch sử chat: " + e.getMessage());
         }
 
         return new ChatResponse(reply);
