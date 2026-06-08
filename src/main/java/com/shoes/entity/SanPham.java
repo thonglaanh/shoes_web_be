@@ -2,6 +2,7 @@ package com.shoes.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "san_pham")
@@ -47,6 +48,12 @@ public class SanPham {
 
     @Column(name = "ngay_cap_nhat")
     private LocalDateTime ngayCapNhat;
+
+    @OneToMany(mappedBy = "sanPham", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SanPhamChiTiet> chiTiets;
+
+    @OneToMany(mappedBy = "sanPham", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DanhGia> danhGias;
 
     public Integer getMaSanPham() {
         return maSanPham;
