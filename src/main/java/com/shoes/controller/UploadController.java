@@ -1,51 +1,57 @@
 package com.shoes.controller;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.nio.file.*;
 import java.util.Map;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/upload")
 @CrossOrigin(origins = "*")
 public class UploadController {
 
-    private final Path uploadDir;
+    @Value("dmyeyw6do")
+    private String cloudName;
 
-    public UploadController() {
-        this.uploadDir = Paths.get("uploads").toAbsolutePath().normalize();
-        try {
-            Files.createDirectories(this.uploadDir);
-        } catch (IOException e) {
-            throw new RuntimeException("Could not create upload directory", e);
-        }
-    }
+    @Value("373226947945326")
+    private String apiKey;
+
+    @Value("rsL30mFPTr919FHlcpXqinxc4H0")
+    private String apiSecret;
 
     @PostMapping
-    public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file) {
-        if (file.isEmpty()) {
-            return ResponseEntity.badRequest().body(Map.of("error", "File is empty"));
-        }
+    public ResponseEntity<?> upload(
+            @RequestParam("file") MultipartFile file) {
 
         try {
-            String originalName = file.getOriginalFilename();
-            String ext = "";
-            if (originalName != null && originalName.contains(".")) {
-                ext = originalName.substring(originalName.lastIndexOf("."));
-            }
-            String fileName = UUID.randomUUID().toString() + ext;
-            Path target = this.uploadDir.resolve(fileName);
-            Files.copy(file.getInputStream(), target, StandardCopyOption.REPLACE_EXISTING);
 
-            String url = "https://shoes-web-be-t7xh.onrender.com/uploads/" + fileName;
-            return ResponseEntity.ok(Map.of("url", url, "fileName", fileName));
-        } catch (IOException e) {
-            return ResponseEntity.internalServerError().body(Map.of("error", "Upload failed: " + e.getMessage()));
+            Cloudinary cloudinary = new Cloudinary(
+                    ObjectUtils.asMap(
+                            "cloud_name", cloudName,
+                            "api_key", apiKey,
+                            "api_secret", apiSecret));
+
+            Map<?, ?> result = cloudinary.uploader().upload(
+                    file.getBytes(),
+                    ObjectUtils.emptyMap());
+
+            String imageUrl = result.get("secure_url").toString();
+
+            return ResponseEntity.ok(
+                    Map.of(
+                            "url", imageUrl));
+
+        } catch (Exception e) {
+
+            return ResponseEntity.internalServerError()
+                    .body(
+                            Map.of(
+                                    "error",
+                                    e.getMessage()));
         }
     }
 }
